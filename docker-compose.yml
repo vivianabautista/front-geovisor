@@ -1,0 +1,12 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"         # Mapea el puerto 3000 del contenedor al puerto 3000 en tu máquina local
+    volumes:
+      - .:/app              # Mapea el directorio actual de tu máquina al contenedor
+      - /app/node_modules    # Evita sobrescribir la carpeta node_modules dentro del contenedor
+    environment:
+      - CHOKIDAR_USEPOLLING=true  # Habilita la recarga en caliente
+    command: npm start       # Ejecuta `npm start` para iniciar la app en modo desarrollo
