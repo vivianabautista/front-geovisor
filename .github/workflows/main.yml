@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4.1.0
         with:
-          node-version: "18"
+          node-version: "19"
 
       - name: Install Dependencies
         run: npm i
@@ -33,7 +33,7 @@ jobs:
       - name: Deploy GitHub Pages
         uses: crazy-max/ghaction-github-pages@v4.1.0
         with:
-          build_dir: dist/
+          build_dir: dist/angular-poc
         env: 
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
