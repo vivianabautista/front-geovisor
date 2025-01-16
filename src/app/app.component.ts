@@ -1,13 +1,20 @@
 import { Component } from '@angular/core';
-// import { RouterOutlet } from '@angular/router';
 import { TestLearnComponent } from './test-learn/test-learn.component';
 import { MapsComponent } from './maps/maps.component';
 import { SectionsComponent } from './pages/sections/sections.component';
+import { RouterLink, RouterOutlet } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
-  imports: [TestLearnComponent, MapsComponent, SectionsComponent],
+  imports: [RouterOutlet, TestLearnComponent, MapsComponent, SectionsComponent, RouterLink],
   template: `
+  <nav>
+   <a routerLink="/">Home</a>
+    <a routerLink="/about">User</a>
+     
+    </nav>
+    <router-outlet />
     @if (isServerRunning) {
     <h1>
         Welcome to {{ je }}!
