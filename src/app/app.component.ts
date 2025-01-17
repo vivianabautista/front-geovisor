@@ -3,11 +3,12 @@ import { TestLearnComponent } from './test-learn/test-learn.component';
 import { MapsComponent } from './maps/maps.component';
 import { SectionsComponent } from './pages/sections/sections.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { FormsComponent } from './forms/forms.component';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TestLearnComponent, MapsComponent, SectionsComponent, RouterLink],
+  imports: [RouterOutlet, TestLearnComponent, MapsComponent, SectionsComponent, RouterLink, FormsComponent],
   template: `
   <nav>
    <a routerLink="/">Home</a>
@@ -21,6 +22,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
       </h1>
       <app-test-learn cositas='cositas'   (countEvent)="addItem($event)"></app-test-learn>
 <app-maps></app-maps>
+<app-forms></app-forms>
 <app-sections></app-sections>
     }
     @else {
