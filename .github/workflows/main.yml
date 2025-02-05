@@ -31,11 +31,14 @@ jobs:
 
       - name: Build App
         run: npm run build:prod
+      
+      - name: Rename index for routing
+        run: mv dist/angular-poc/index.html dist/angular-poc/404.html
 
       - name: Deploy GitHub Pages
         uses: crazy-max/ghaction-github-pages@v4.1.0
         with:
-          build_dir: dist/
+          build_dir: dist/angular-poc
         env: 
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
