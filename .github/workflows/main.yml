@@ -38,7 +38,7 @@ jobs:
       - name: Deploy GitHub Pages
         uses: crazy-max/ghaction-github-pages@v4.1.0
         with:
-          build_dir: dist/angular-poc
+          build_dir: dist/angular-poc/browser
         env: 
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
