@@ -1,12 +1,19 @@
 import { Component } from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {ReactiveFormsModule, FormControl, FormGroup, Validators} from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
+import {ReactiveFormsModule, FormControl, FormGroup, Validators} from '@angular/forms';
+ import { OneComponent } from '../layout/one/one.component';
+ import { TwoComponent } from '../layout/two/two.component';
+ import { ThreeComponent } from '../layout/three/three.component';
 
 @Component({
   selector: 'app-forms',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule,OneComponent, TwoComponent, ThreeComponent ],
   template:  `
+
+ 
+<h1>  Forms</h1>
 <hr>
    <h1>  Forms</h1>
  <p>Username: {{ username }}</p>
@@ -63,6 +70,16 @@ export class FormsComponent {
     alert(
       this.profileForm.value.name + ' | ' + this.profileForm.value.email
     );
+  }
+
+  seccionVisible: string | null = null;
+
+  mostrar(seccion: string) {
+    this.seccionVisible = seccion;
+  }
+
+  cerrar() {
+    this.seccionVisible = null;
   }
 
 
