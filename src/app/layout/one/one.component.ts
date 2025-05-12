@@ -1,9 +1,12 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { CreateComponent } from '../../form/create/create.component';
+
+
 
 
 @Component({
   selector: 'app-one',
-  imports: [],
+  imports: [CreateComponent],
   templateUrl: './one.component.html',
   styleUrl: './one.component.scss'
 })

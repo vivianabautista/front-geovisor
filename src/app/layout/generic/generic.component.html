@@ -1,12 +1,12 @@
 <!-- Botones visibles solo en móvil -->
-<div class="mobile-buttons">
+<!-- <div class="mobile-buttons">
   <button (click)="mostrar('seccion1')">Abrir Sección 1</button>
   <button (click)="mostrar('seccion2')">Abrir Sección 2</button>
   <button (click)="mostrar('seccion3')">Abrir Sección 3</button>
-</div>
+</div> -->
 
 <!-- Secciones como pop-ups -->
-<div [ngClass]="{'popup-visible': seccionVisible === 'seccion1'}">
+<!-- <div [ngClass]="{'popup-visible': seccionVisible === 'seccion1'}">
    <app-one></app-one>
 </div>
 <div [ngClass]="{'popup-visible': seccionVisible === 'seccion2'}">
@@ -18,7 +18,7 @@
 
 <div *ngIf="seccionVisible === 'seccion1'">
   <app-one (cerrarSeccion)="cerrar()"></app-one>
-</div>
+</div> -->
 
   <div class="container">
   <app-one></app-one>
