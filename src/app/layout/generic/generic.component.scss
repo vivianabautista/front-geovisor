@@ -1,0 +1,38 @@
+
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.container > * {
+  flex: 1; /* Cada sección ocupa 33% */
+  border: 1px solid #ccc;
+}
+
+/* Modo móvil: solo muestra íconos o botones para abrir las secciones como popups */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .container > * {
+    display: none; /* Ocultamos las secciones */
+  }
+
+  .popup-visible {
+    display: block;
+    position: fixed;
+    top: 10%;
+    left: 5%;
+    width: 90%;
+    height: 80%;
+    background: white;
+    z-index: 10;
+    border: 1px solid black;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    overflow: auto;
+  }
+}

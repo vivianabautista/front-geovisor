@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SpiralGalaxyComponent } from './spiral-galaxy.component';
+import { CreateComponent } from './create.component';
 
-describe('SpiralGalaxyComponent', () => {
-  let component: SpiralGalaxyComponent;
-  let fixture: ComponentFixture<SpiralGalaxyComponent>;
+describe('CreateComponent', () => {
+  let component: CreateComponent;
+  let fixture: ComponentFixture<CreateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SpiralGalaxyComponent]
+      imports: [CreateComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SpiralGalaxyComponent);
+    fixture = TestBed.createComponent(CreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
