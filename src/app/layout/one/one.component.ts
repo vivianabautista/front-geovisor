@@ -1,12 +1,12 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { CreateComponent } from '../../form/create/create.component';
+import { ConsultFormComponent } from '../../form/consult/consult.component';
 
 
 
 
 @Component({
   selector: 'app-one',
-  imports: [CreateComponent],
+  imports: [ ConsultFormComponent],
   templateUrl: './one.component.html',
   styleUrl: './one.component.scss'
 })

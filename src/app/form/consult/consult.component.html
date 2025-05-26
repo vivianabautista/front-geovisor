@@ -1,1 +1,15 @@
-<p>consult works!</p>
+<div>
+  <h2>Consulta de Formularios</h2>
+
+  <input [formControl]="searchControl" placeholder="Escribe para buscar..." />
+
+  <div style="margin-top: 1rem;">
+    <div
+      *ngFor="let item of results()"
+      style="border: 1px solid #ccc; padding: 1rem; margin-bottom: 0.5rem; border-radius: 8px;"
+    >
+      <strong>{{ item.name }}</strong><br />
+      <small>{{ item.description }}</small>
+    </div>
+  </div>
+</div>
