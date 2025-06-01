@@ -1,1 +1,16 @@
-<p>create works!</p>
+<h1> Crear pregunta</h1>
+
+<form [formGroup]="form" (ngSubmit)="guardar()">
+  <input formControlName="question" placeholder="Pregunta" />
+
+  <select formControlName="typeChoice" class="tech-select">
+    <option value="">Seleccione tipo...</option>
+    <option *ngFor="let type of typeQuestion" [value]="type.id">
+      {{ type.name }}
+    </option>
+  </select>
+  
+  <input formControlName="options" placeholder="Options" />
+  <button type="submit">Guardar</button>
+
+  

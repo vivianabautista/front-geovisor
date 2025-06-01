@@ -1,38 +1,40 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 
 @Component({
-  selector: 'form-edit',
+  selector: 'section-create',
   imports: [ReactiveFormsModule],
-  templateUrl: './edit.component.html',
-  styleUrl: './edit.component.scss'
+  templateUrl: './create.component.html',
+  styleUrl: './create.component.scss'
 })
-export class EditComponent {
+export class CreateSectionComponent {
 
-  form: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+   form: FormGroup;
+
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
     this.form = this.fb.group({
       name: [''],
       description: ['']
     });
   }
 
-
-  guardar() {
+  save() {
     const payload = this.form.value;
     console.log(payload);
-    this.http.post('http://localhost:8000/form/', payload).subscribe({
+    this.http.post('http://localhost:8000/section/', payload).subscribe({
       next: () => {
         alert('Guardado correctamente');
         // cerrar este componente y abrir el de editar
       },
       error: err => {
-
+      
         console.error('Error al guardar', err);
-        alert('Error al guardar el formulario');
+        alert('Error al guardar la sección');
       }
     });
   }

@@ -10,33 +10,33 @@ interface Item {
 }
 
 @Component({
-  selector: 'form-consult',
-  standalone: true,
+  selector: 'section-consult',
+    standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './consult.component.html',
-  styleUrls: ['./consult.component.scss']
+  styleUrl: './consult.component.scss'
 })
-export class ConsultFormComponent implements OnInit {
+export class ConsultSectionComponent implements OnInit {
   private http = inject(HttpClient);
 
-  searchControl = new FormControl('');
+  searchSectionControl = new FormControl('');
   results = signal<Item[]>([]);
 
 
   ngOnInit(): void {
     // Escucha los cambios del input
-    this.searchControl.valueChanges
+    this.searchSectionControl.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe((term) => this.buscar(term ?? ''));
+      .subscribe((term) => this.searchSection(term ?? ''));
 
     // Primera búsqueda con término vacío
-    this.buscar('');
+    this.searchSection('');
   }
 
 
 
-  buscar(term: string) {
-    this.http.get<Item[]>(`http://localhost:8000/form/${term}`).subscribe({
+  searchSection(term: string) {
+    this.http.get<Item[]>(`http://localhost:8000/section/${term}`).subscribe({
       next: data => this.results.set(data),
       error: err => console.error('Error al buscar', err)
     });

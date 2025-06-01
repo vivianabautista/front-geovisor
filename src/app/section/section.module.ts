@@ -4,16 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { ConsultFormComponent } from './consult/consult.component';
-import { CreateComponent } from './create/create.component';
+import { ConsultSectionComponent } from './consult/consult.component';
+import { CreateSectionComponent } from './create/create.component';
 
-import { AboutRoutingModule } from './form-routing.module';
+import { AboutRoutingModule } from './section-routing.module';
 
 
 @NgModule({
   declarations: [
-      ConsultFormComponent,
-      CreateComponent
+      ConsultSectionComponent,
+      CreateSectionComponent
   ],
   imports: [
     CommonModule,

@@ -1,7 +1,8 @@
-<p>Crear un Formulario</p>
+
+<p>Crear nueva Sección</p>
 
 
-<form [formGroup]="form" (ngSubmit)="guardar()">
+<form [formGroup]="form" (ngSubmit)="save()">
   <!-- tus campos aquí -->
   <input formControlName="name" placeholder="Nombre" />
   <input formControlName="description" placeholder="Descripción" />
