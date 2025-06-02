@@ -3,8 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormService } from '../../form/form.service';
+import { AppStateService, AppState } from '../../app-state.service';
 
 interface Item {
+  id: number;
   name: string;
   description: string;
 }
@@ -14,14 +18,34 @@ interface Item {
     standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './consult.component.html',
-  styleUrl: './consult.component.scss'
+  styleUrls: ['./consult.component.scss']
 })
 export class ConsultSectionComponent implements OnInit {
   private http = inject(HttpClient);
+  private fb = inject(FormBuilder);
+  private formService = inject(FormService);
+  private appState = inject(AppStateService);
 
+  currentFormId: number | null = null;
+  form: FormGroup;
   searchSectionControl = new FormControl('');
   results = signal<Item[]>([]);
 
+
+  constructor() {
+    // Inicializar el formulario
+    this.form = this.fb.group({
+      name: [''],
+      description: ['']
+    });
+
+    // Suscribirse al formulario activo
+    this.formService.getCurrentForm().subscribe((form: any) => {
+      if (form) {
+        this.currentFormId = form.id;
+      }
+    });
+  }
 
   ngOnInit(): void {
     // Escucha los cambios del input
@@ -33,6 +57,29 @@ export class ConsultSectionComponent implements OnInit {
     this.searchSection('');
   }
 
+  editar(item: Item) {
+    console.log(item);
+  }
+
+  agregar(item: Item) {
+    if (!this.currentFormId) {
+      alert('No hay un formulario seleccionado');
+      return;
+    }
+
+    const url = `http://localhost:8000/form/${this.currentFormId}/section/${item.id}`;
+    this.http.post(url, {}).subscribe({
+      next: () => {
+        alert('Sección agregada al formulario');
+        // Actualizar la lista de secciones
+        this.searchSection('');
+      },
+      error: err => {
+        console.error('Error al agregar sección:', err);
+        alert('Error al agregar la sección al formulario');
+      }
+    });
+  }
 
 
   searchSection(term: string) {
