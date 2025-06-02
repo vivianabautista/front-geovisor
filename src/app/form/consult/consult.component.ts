@@ -3,10 +3,20 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { AppStateService, AppState } from '../../app-state.service';
+import { FormService } from '../form.service';
 
-interface Item {
+interface Section {
+  id: number;
   name: string;
   description: string;
+}
+
+interface Item {
+  id: number;
+  name: string;
+  description: string;
+  sections: Section[];
 }
 
 @Component({
@@ -17,7 +27,9 @@ interface Item {
   styleUrls: ['./consult.component.scss']
 })
 export class ConsultFormComponent implements OnInit {
- private http = inject(HttpClient);
+  private http = inject(HttpClient);
+  private appState = inject(AppStateService);
+  private formService = inject(FormService);
 
   searchControl = new FormControl('');
   results = signal<Item[]>([]);
@@ -30,6 +42,13 @@ export class ConsultFormComponent implements OnInit {
 
     // Primera búsqueda con término vacío
     this.buscar('');
+  }
+
+  editar(item: Item) {
+    // Guardar el formulario actual en el servicio
+    this.formService.setCurrentForm(item);
+    // Cambiar al estado de edición
+    this.appState.setState(AppState.EDIT);
   }
 
   buscar(term: string) {

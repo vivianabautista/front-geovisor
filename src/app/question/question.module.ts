@@ -3,17 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AppStateService } from '../app-state.service';
 
-import { ConsultFormComponent } from './consult/consult.component';
-import { CreateComponent } from './create/create.component';
+import { ConsultQuestionComponent } from './consult/consult.component';
+import { CreateQuestionComponent } from './create/create.component';
 
-import { AboutRoutingModule } from './form-routing.module';
+import { AboutRoutingModule } from './question-routing.module';
+
 
 @NgModule({
   declarations: [
-      ConsultFormComponent,
-      CreateComponent
+      ConsultQuestionComponent,
+      CreateQuestionComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +21,6 @@ import { AboutRoutingModule } from './form-routing.module';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule
-  ],
-  providers: [AppStateService]
+  ]
 })
 export class FormModule { }
