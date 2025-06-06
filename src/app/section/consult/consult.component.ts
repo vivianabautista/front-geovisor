@@ -6,6 +6,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormService } from '../../form/form.service';
 import { AppStateService, AppState } from '../../app-state.service';
+import { Subject } from 'rxjs';
 
 interface Item {
   id: number;
@@ -30,6 +31,7 @@ export class ConsultSectionComponent implements OnInit {
   form: FormGroup;
   searchSectionControl = new FormControl('');
   results = signal<Item[]>([]);
+  sectionAdded = new Subject<void>(); // Subject para emitir eventos de adición de sección
 
 
   constructor() {
@@ -73,8 +75,10 @@ export class ConsultSectionComponent implements OnInit {
         alert('Sección agregada al formulario');
         // Actualizar la lista de secciones
         this.searchSection('');
+        // Emitir evento de adición de sección a través del FormService
+        this.formService.emitSectionAdded();
       },
-      error: err => {
+      error: (err: any) => {
         console.error('Error al agregar sección:', err);
         alert('Error al agregar la sección al formulario');
       }

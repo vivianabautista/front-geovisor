@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormArray } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FormService } from '../form.service';
 import { AppStateService, AppState } from '../../app-state.service';
+import { FormItem } from '../form.service';
 
 interface Section {
   id: number;
@@ -11,12 +12,8 @@ interface Section {
   description: string;
 }
 
-interface Form {
-  id: number;
-  name: string;
-  description: string;
-  sections: Section[];
-}
+// Usar la interfaz FormItem del servicio
+export type Form = FormItem;
 
 
 @Component({
@@ -29,6 +26,7 @@ interface Form {
 export class EditComponent implements OnInit {
   form: FormGroup;
   private formId: number | null = null;
+  private sectionAddedSubscription: { unsubscribe: () => void } | null = null;
 
   constructor(
     private fb: FormBuilder, 
@@ -49,38 +47,75 @@ export class EditComponent implements OnInit {
     this.formService.getCurrentForm().subscribe(form => {
       if (form) {
         this.formId = form.id;
-        this.form.patchValue({
-          name: form.name,
-          description: form.description
-        });
+        this.updateForm(form);
+      }
+    });
 
-        // Actualizar el array de secciones
+    // Suscribirse al evento de adición de sección
+    this.sectionAddedSubscription = this.formService.sectionAdded$.subscribe(() => {
+      // El formulario se actualizará automáticamente cuando se emita el evento
+      // ya que el FormService actualiza el BehaviorSubject
+    });
+  }
+
+  private updateForm(form: FormItem) {
+    const sectionsArray = this.form.get('sections') as FormArray;
+    sectionsArray.clear();
+    
+    // Crear un nuevo array de grupos para las secciones
+    const newSections = form.sections?.map(section => 
+      this.fb.group({
+        id: section.id,
+        name: section.name,
+        description: section.description
+      })
+    ) || [];
+
+    // Agregar todas las secciones al array
+    newSections.forEach(sectionGroup => sectionsArray.push(sectionGroup));
+
+    // Actualizar el formulario completo
+    this.form.patchValue({
+      name: form.name,
+      description: form.description,
+      sections: form.sections
+    });
+  }
+
+  eliminarSection(section: Section) {
+    if (!this.formId) {
+      console.error('No se encontró el ID del formulario');
+      return;
+    }
+
+    const url = `http://localhost:8000/form/${this.formId}/section/${section.id}`;
+    this.http.delete(url).subscribe({
+      next: () => {
+        // Actualizar el formulario localmente
         const sectionsArray = this.form.get('sections') as FormArray;
-        sectionsArray.clear();
-        form.sections?.forEach((section: Section) => {
-          sectionsArray.push(this.fb.group({
-            id: section.id,
-            name: section.name,
-            description: section.description
-          }));
-        });
-
-        // Actualizar el valor del formulario
-        this.form.patchValue({
-          name: form.name,
-          description: form.description,
-          sections: form.sections
-        });
+        const index = sectionsArray.controls.findIndex(s => s.get('id')?.value === section.id);
+        if (index !== -1) {
+          sectionsArray.removeAt(index);
+        }
+        
+        // Actualizar el formulario en el servicio
+        this.formService.emitSectionAdded();
+      },
+      error: (err: any) => {
+        console.error('Error al eliminar sección:', err);
       }
     });
   }
 
-  eliminarSection(section: any) {
-    console.log(section);
+  editarSection(section: Section) {
+    console.log('Editar sección:', section);
   }
 
-  editarSection(section: any) {
-    console.log(section);
+  ngOnDestroy() {
+    // Limpiar la suscripción al evento de adición de sección
+    if (this.sectionAddedSubscription) {
+      this.sectionAddedSubscription.unsubscribe();
+    }
   }
 
   guardar() {
@@ -94,9 +129,10 @@ export class EditComponent implements OnInit {
 
     this.http.put(`http://localhost:8000/form/${this.formId}`, payload).subscribe({
       next: () => {
-        alert('Formulario actualizado correctamente');
+        // Actualizar el formulario en el servicio
+        this.formService.setCurrentForm(payload);
       },
-      error: err => {
+      error: (err: any) => {
         console.error('Error al actualizar:', err);
         alert('Error al actualizar el formulario');
       }
