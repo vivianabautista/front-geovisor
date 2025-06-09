@@ -1,10 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormArray } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FormService } from '../form.service';
 import { AppStateService, AppState } from '../../app-state.service';
 import { FormItem } from '../form.service';
+import { SectionItem, SectionService } from '../../section/section.service';
+
 
 interface Section {
   id: number;
@@ -27,6 +30,7 @@ export class EditComponent implements OnInit {
   form: FormGroup;
   private formId: number | null = null;
   private sectionAddedSubscription: { unsubscribe: () => void } | null = null;
+  private sectionService = inject(SectionService);
 
   constructor(
     private fb: FormBuilder, 
@@ -88,7 +92,7 @@ export class EditComponent implements OnInit {
       return;
     }
 
-    const url = `http://localhost:8000/form/${this.formId}/section/${section.id}`;
+    const url = `http://localhost:8000/form/${this.formId}/section/${section.id}/`;
     this.http.delete(url).subscribe({
       next: () => {
         // Actualizar el formulario localmente
@@ -107,8 +111,11 @@ export class EditComponent implements OnInit {
     });
   }
 
-  editarSection(section: Section) {
-    console.log('Editar sección:', section);
+  editarSection(section: SectionItem) {
+    console.log(section);
+    // Guardar el formulario actual en el servicio
+    this.sectionService.setCurrentSection(section);
+    this.appState.setState(AppState.EDIT_SECTION);
   }
 
   ngOnDestroy() {
@@ -125,9 +132,8 @@ export class EditComponent implements OnInit {
     }
 
     const payload = this.form.value;
-    console.log('Actualizando formulario:', payload);
 
-    this.http.put(`http://localhost:8000/form/${this.formId}`, payload).subscribe({
+    this.http.put(`http://localhost:8000/form/${this.formId}/`, payload).subscribe({
       next: () => {
         // Actualizar el formulario en el servicio
         this.formService.setCurrentForm(payload);

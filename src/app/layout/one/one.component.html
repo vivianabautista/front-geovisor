@@ -1,20 +1,24 @@
 <!-- <button class="cerrar" (click)="cerrar()">Cerrar</button> only view in mobile -->
 
 <div class="container">
-  <!-- Estado inicial -->
-  <div *ngIf="isInitialState()" class="state-container">
+  <!-- Consultar Formulario -->
+  <div *ngIf="isConsultFormVisible()" class="state-container">
     <form-consult></form-consult>
     <button class="tech-btn" (click)="openCreate()">Crear nuevo formulario</button>
   </div>
 
-  <!-- Estado de creación -->
-  <div *ngIf="isCreateState()" class="state-container">
+  <!-- Crear Formulario -->
+  <div *ngIf="isCreateFormVisible()" class="state-container">
     <form-create></form-create>
+    <button class="tech-btn" (click)="closeCreateForm()">Cerrar</button>
   </div>
 
-   <!-- Estado de Edicion -->
-   <div *ngIf="isEditState()" class="state-container">
+
+  <!-- Editar Formulario -->
+  <div *ngIf="isEditFormVisible()" class="state-container">
+    <button class="tech-btn" (click)="closeCreateForm()">Cerrar</button>
     <form-edit></form-edit>
+    <button class="tech-btn" (click)="createSection()">Crear Nueva Sección</button>
     <section-consult></section-consult>
   </div>
 

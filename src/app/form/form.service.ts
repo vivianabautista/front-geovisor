@@ -33,7 +33,7 @@ export class FormService {
     this.getCurrentForm().subscribe(form => {
       if (form && form.id) {
         // Obtener el formulario actualizado del backend
-        this.http.get<FormItem>(`http://localhost:8000/form/${form.id}`).subscribe(updatedForm => {
+        this.http.get<FormItem>(`http://localhost:8000/form/${form.id}/`).subscribe(updatedForm => {
           this.setCurrentForm(updatedForm);
         });
       }

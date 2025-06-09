@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormService } from '../../form/form.service';
+import { FormItem } from '../../form/form.service';
 import { AppStateService, AppState } from '../../app-state.service';
 import { Subject } from 'rxjs';
 
@@ -69,14 +70,22 @@ export class ConsultSectionComponent implements OnInit {
       return;
     }
 
-    const url = `http://localhost:8000/form/${this.currentFormId}/section/${item.id}`;
+    const url = `http://localhost:8000/form/${this.currentFormId}/section/${item.id}/`;
     this.http.post(url, {}).subscribe({
       next: () => {
+        // Actualizar el formulario en el servicio
+        this.formService.getCurrentForm().subscribe(currentForm => {
+          if (currentForm) {
+            // Obtener el formulario actualizado del backend
+            this.http.get<FormItem>(`http://localhost:8000/form/${this.currentFormId}/`).subscribe(updatedForm => {
+              // Actualizar el formulario en el servicio
+              this.formService.setCurrentForm(updatedForm);
+              // Emitir el evento de actualización
+              this.formService.emitSectionAdded();
+            });
+          }
+        });
         alert('Sección agregada al formulario');
-        // Actualizar la lista de secciones
-        this.searchSection('');
-        // Emitir evento de adición de sección a través del FormService
-        this.formService.emitSectionAdded();
       },
       error: (err: any) => {
         console.error('Error al agregar sección:', err);

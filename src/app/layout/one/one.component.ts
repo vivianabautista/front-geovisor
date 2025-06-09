@@ -23,10 +23,11 @@ export class OneComponent implements OnInit {
   @Output() cerrarSeccion = new EventEmitter<void>();
   
   // Exponer métodos del AppStateService para usarlos en la plantilla
-  isInitialState = () => this.appState.isInitialState();
-  isCreateState = () => this.appState.isCreateState();
-  isConsultState = () => this.appState.isConsultState();
-  isEditState = () => this.appState.isEditState();
+  isConsultFormVisible = () => this.appState.isConsultFormVisible();
+  isCreateFormVisible = () => this.appState.isCreateFormVisible();
+  isConsultSectionVisible = () => this.appState.isConsultSectionVisible();
+  isEditFormVisible = () => this.appState.isEditFormVisible();
+  isEditSectionVisible = () => this.appState.isEditSectionVisible();
 
   constructor(private appState: AppStateService) {
     // Inicializar el estado
@@ -44,10 +45,14 @@ export class OneComponent implements OnInit {
     this.appState.setState(AppState.CREATE);
   }
 
-  addSection(): void {
+  createSection(): void {
+    this.appState.setState(AppState.CREATE_SECTION);
+  }
+
+  closeCreateForm(): void {
     // Cambiar al estado de consulta
     console.log('Cambiando a estado CONSULT');
-    this.appState.setState(AppState.CONSULT);
+    this.appState.setState(AppState.INITIAL);
   }
 
   cerrar(): void {

@@ -4,16 +4,42 @@
   <input [formControl]="searchControl" 
     placeholder="Escribe para buscar..." />
 
+  <div *ngIf="loading">
+    <p>Cargando datos...</p>
+  </div>
+
+  <div *ngIf="!loading && !results">
+    <p>Error: results es undefined</p>
+  </div>
 
 
-  <div style="margin-top: 1rem;">
-    <div
-      *ngFor="let item of results()"
-      style="border: 1px solid #ccc; padding: 1rem; margin-bottom: 0.5rem; border-radius: 8px;"
-    >
-      <strong>{{ item.question }}</strong><br />
-      <small>{{ item.type }}</small>
-      <p> {{ item.options}}  </p>
+  <div *ngIf="!loading && results.length > 0">
+    <div style="margin-top: 1rem;">
+      <div
+        *ngFor="let item of results"
+        style="border: 1px solid #ccc; padding: 1rem; margin-bottom: 0.5rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: flex-start;"
+      >
+        <div>
+          <strong>{{ item.question }}</strong><br />
+          <small>{{ item.typeChoice?.name }}</small>
+          <p>{{ item.options }}</p>
+        </div>
+        <div>
+         
+
+          <div style="display: flex; gap: 0.5rem;">
+    
+            <button class="tech-btn" (click)="addQuestionToSection(item.id)">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+            </button>
+          </div>
+
+
+        </div>
+      </div>
     </div>
   </div>
 </div>

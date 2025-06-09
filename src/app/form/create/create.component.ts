@@ -54,7 +54,7 @@ export class CreateComponent {
       // Guardar el formulario actual en el servicio
       this.formService.setCurrentForm(formItem);
       // Cambiar al estado de edición
-      this.appState.setState(AppState.EDIT);
+      this.appState.setState(AppState.EDIT_FORM);
     }
 
   guardar() {

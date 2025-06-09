@@ -1,1 +1,32 @@
-<p>edit works!</p>
+<div>
+
+
+<h2>Editar Sección</h2>
+
+<form [formGroup]="section" (ngSubmit)="save()">
+  <!-- tus campos aquí -->
+  <input formControlName="name" placeholder="Nombre" />
+  <input formControlName="description" placeholder="Descripción" />
+  <button type="submit">Guardar</button>
+</form>
+
+</div>
+
+<div style="margin-top: 2rem;">
+  <h3>Preguntas</h3>
+  <div *ngFor="let question of section.get('questions')?.value || []" 
+       style="border: 1px solid #ccc; padding: 1rem; margin-bottom: 0.5rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: flex-start;">
+    <div>
+      <strong>{{ question.question }}</strong><br />
+      <p>{{ question.options }}</p>
+    </div>
+    <div style="display: flex; gap: 0.5rem;">
+      <button class="tech-btn" (click)="eliminarPregunta(question)">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>

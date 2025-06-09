@@ -48,7 +48,7 @@ export class ConsultFormComponent implements OnInit {
     // Guardar el formulario actual en el servicio
     this.formService.setCurrentForm(item);
     // Cambiar al estado de edición
-    this.appState.setState(AppState.EDIT);
+    this.appState.setState(AppState.EDIT_FORM);
   }
 
   buscar(term: string) {

@@ -1,4 +1,14 @@
-<section-create ></section-create>
 
-<question-consult></question-consult>
-<button   (click)="addQuestion()">Agregar nueva Pregunta</button>
+<div  *ngIf="isCreateSectionVisible()">
+
+    <section-create ></section-create>
+</div>
+
+
+<div  *ngIf="isEditSectionVisible()">
+    <section-edit></section-edit>
+
+    <question-consult></question-consult>
+    <button   (click)="addQuestion()">Agregar nueva Pregunta</button>
+
+</div>
