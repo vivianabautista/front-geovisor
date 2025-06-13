@@ -1,0 +1,55 @@
+/* Add consistent spacing to all components */
+.state-container {
+  padding: 1rem;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.tech-btn {
+  margin: 0.5rem 0;
+}
+
+/* Close button styles */
+.close-btn-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0.5rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  width: 20px;
+  height: 20px;
+}
+
+.close-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.close-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
+section-create,
+section-consult,
+section-edit,
+question-consult,
+form-consult,
+form-create,
+form-edit {
+  padding: 1rem;
+  margin: 1rem 0;
+  box-sizing: border-box;
+}
+
+/* Add spacing between buttons and components */
+button.tech-btn + * {
+  margin-top: 1rem;
+}

@@ -132,13 +132,28 @@ export class EditSectionComponent implements OnInit {
   }
 
 
-  eliminarPregunta(question: QuestionItem) {
+  deleteQuestion(question: QuestionItem) {
     if (!this.sectionId) {
       alert('No se encontró el ID de la sección');
       return;
     }
 
-    
+
+    this.sectionService.deleteQuestion(this.sectionId, question.id).subscribe({
+      next: () => {
+        // Actualizar el formulario local
+        const questions = this.section.get('questions') as FormArray;
+        const index = questions.controls.findIndex(q => q.get('id')?.value === question.id);
+        if (index !== -1) {
+          questions.removeAt(index);
+        }
+       
+      },
+      error: (error) => {
+        console.error('Error al eliminar la pregunta:', error);
+        alert('Error al eliminar la pregunta. Por favor, inténtalo de nuevo.');
+      }
+    });
   }
   
 

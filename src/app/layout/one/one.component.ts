@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { ConsultFormComponent } from '../../form/consult/consult.component';
 import { CreateComponent } from '../../form/create/create.component';
 import { EditComponent } from '../../form/edit/edit.component';
-import { ConsultSectionComponent } from '../../section/consult/consult.component';
 
 @Component({
   selector: 'app-one',
@@ -14,7 +13,7 @@ import { ConsultSectionComponent } from '../../section/consult/consult.component
     ConsultFormComponent,
     CreateComponent,
     EditComponent,
-    ConsultSectionComponent
+    
   ],
   templateUrl: './one.component.html',
   styleUrls: ['./one.component.scss']

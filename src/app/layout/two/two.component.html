@@ -1,14 +1,14 @@
+<div *ngIf="isCreateSectionVisible()" class="state-container">
 
-<div  *ngIf="isCreateSectionVisible()">
-
-    <section-create ></section-create>
+    <section-create></section-create>
+    <section-consult></section-consult>
 </div>
 
 
-<div  *ngIf="isEditSectionVisible()">
+<div *ngIf="isEditSectionVisible()" class="state-container">
     <section-edit></section-edit>
-
+    <button class="tech-btn" (click)="addQuestion()">Agregar nueva Pregunta</button>
     <question-consult></question-consult>
-    <button   (click)="addQuestion()">Agregar nueva Pregunta</button>
+    
 
 </div>

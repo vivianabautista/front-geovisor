@@ -9,6 +9,7 @@ export enum AppState {
   EDIT_SECTION = 'edit_section', // EditarSeccion
   CREATE_SECTION = 'create_section', // CrearSeccion
   CREATE_QUESTION = 'create_question' // CrearPregunta
+
 }
 
 @Injectable({ providedIn: 'root' })
@@ -38,9 +39,6 @@ export class AppStateService {
     return this.checkState(AppState.CREATE);
   }
 
-  isEditFormState(): boolean {
-    return this.checkState(AppState.EDIT_FORM, AppState.EDIT_SECTION);
-  }
 
   isConsultState(): boolean {
     return this.checkState(AppState.CONSULT);
@@ -60,6 +58,9 @@ export class AppStateService {
   }
 
   isEditFormVisible(): boolean {
+    if (this.checkState(AppState.CREATE_QUESTION)) {
+      return true;
+    }
     if (this.checkState(AppState.CREATE_SECTION)) {
       return true;
     }
@@ -73,7 +74,13 @@ export class AppStateService {
   }
 
   isEditSectionVisible(): boolean {
-    return this.checkState(AppState.EDIT_SECTION);
+    if (this.checkState(AppState.CREATE_QUESTION)) {
+      return true;
+    }
+    if (this.checkState(AppState.EDIT_SECTION)) {
+      return true;
+    }
+    return false;
   }
 
   isCreateSectionVisible(): boolean {

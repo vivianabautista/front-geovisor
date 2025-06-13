@@ -4,10 +4,12 @@ import { CreateSectionComponent } from '../../section/create/create.component';
 import { ConsultQuestionComponent } from '../../question/consult/consult.component';
 import { AppStateService, AppState } from '../../app-state.service';
 import { EditSectionComponent } from '../../section/edit/edit.component';
+import { ConsultSectionComponent } from '../../section/consult/consult.component';
+
 
 @Component({
   selector: 'app-two',
-  imports: [CommonModule, CreateSectionComponent, ConsultQuestionComponent, EditSectionComponent],
+  imports: [CommonModule, CreateSectionComponent, ConsultQuestionComponent, EditSectionComponent, ConsultSectionComponent],
   templateUrl: './two.component.html',
   styleUrls: ['./two.component.scss']
 })
@@ -19,10 +21,9 @@ export class TwoComponent {
   
   constructor(private appState: AppStateService) {}
 
-  optionAddQuestion = false;
 
   addQuestion() {
-    this.optionAddQuestion = true;
+    this.appState.setState(AppState.CREATE_QUESTION);
   }
 
   editarSection() {

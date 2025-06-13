@@ -1,18 +1,18 @@
 <div>
-  <h2>Editar Formulario</h2>
+  <h1>Editar Formulario</h1>
 
   <form [formGroup]="form" (ngSubmit)="guardar()">
     <div style="margin-bottom: 1rem;">
       <input formControlName="name" placeholder="Nombre" />
       <input formControlName="description" placeholder="Descripción" />
     </div>
-    <button type="submit" style="margin-top: 1rem;">Actualizar</button>
+    <button type="submit" style="margin-top: 1rem;">Actualizar Nombre</button>
 
 
     <div style="margin-top: 2rem;">
-      <h3>Secciones</h3>
+      <h2>Secciones del Formulario</h2>
       <div *ngFor="let section of form.controls['sections'].value" 
-           style="border: 1px solid #ccc; padding: 1rem; margin-bottom: 0.5rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: flex-start;">
+           style="border: 1px solid #ccc; padding: 1rem; margin: 5px 5px 0.5rem 5px; border-radius: 8px; display: flex; justify-content: space-between; align-items: flex-start;">
         <div>
           <strong>{{ section.name }}</strong><br />
           <small>{{ section.description }}</small>

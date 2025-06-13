@@ -67,4 +67,22 @@ export class SectionService {
   clearCurrentSection() {
     this.currentSection.next(null);
   }
+
+  deleteQuestion(sectionId: number, questionId: number) {
+    return this.http.delete(`http://localhost:8000/section/${sectionId}/question/${questionId}/`)
+      .pipe(
+        tap({
+          next: () => {
+            // Obtener el sectionulario actualizado del backend
+            this.http.get<SectionItem>(`http://localhost:8000/section/${sectionId}/`).subscribe(updatedSection => {
+              this.setCurrentSection(updatedSection);
+              this.emitSectionAdded();
+            });
+          },
+          error: (error) => {
+            console.error('Error al eliminar la pregunta:', error);
+          }
+        })
+      );
+  }
 }

@@ -59,7 +59,6 @@ export class CreateQuestionComponent implements OnInit {
   }
 
   guardar(): void {
-    if (!this.form.valid) return console.log('Formulario inválido');
 
     this.questionTypeService.createQuestion(this.form.value).subscribe(
       (response) => {
