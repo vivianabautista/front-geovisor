@@ -3,11 +3,11 @@
 
 <h2>Editar Sección</h2>
 
-<form [formGroup]="section" (ngSubmit)="save()">
+<form [formGroup]="section" (ngSubmit)="updateSection()">
   <!-- tus campos aquí -->
   <input formControlName="name" placeholder="Nombre" />
   <input formControlName="description" placeholder="Descripción" />
-  <button type="submit">Guardar</button>
+  <button type="submit">Actualizar Nombre</button>
 </form>
 
 </div>

@@ -44,7 +44,7 @@ export class ConsultFormComponent implements OnInit {
     this.buscar('');
   }
 
-  editar(item: Item) {
+  editForm(item: Item) {
     // Guardar el formulario actual en el servicio
     this.formService.setCurrentForm(item);
     // Cambiar al estado de edición

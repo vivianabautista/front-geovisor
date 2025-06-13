@@ -26,7 +26,6 @@ export class AppStateService {
   }
 
   setState(state: AppState): void {
-    console.log('Estado cambiado a:', state);
     this.currentState.next(state);
   }
 

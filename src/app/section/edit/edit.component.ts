@@ -67,12 +67,10 @@ export class EditSectionComponent implements OnInit {
     // Suscribirse al servicio para obtener los datos del formulario
     this.sectionService.getCurrentSection().subscribe(section => {
       if (section) {
-        console.log("Datos recibidos en edit component:", JSON.stringify(section, null, 2));
         this.sectionId = section.id;
         
         // Hacemos la llamada para obtener la sección completa con preguntas
         this.sectionService.getSectionWithQuestions(section.id).subscribe(sectionData => {
-          console.log("Sección completa recibida:", JSON.stringify(sectionData, null, 2));
           
           // Actualizar el formulario completo
           const questionsArray = this.section.get('questions') as FormArray;
@@ -105,32 +103,6 @@ export class EditSectionComponent implements OnInit {
     });
   }
 
-  private updateSection(section: SectionItem) {
-    this.section.patchValue({
-      name: section.name,
-      description: section.description
-    });
-    
-    // Actualizar el array de preguntas
-    const questions = this.section.get('questions') as FormArray;
-    questions.clear(); // Limpiar el array existente
-    
-    if (section.questions) {
-      section.questions.forEach(question => {
-        questions.push(this.fb.group({
-          id: [question.id],
-          question: [question.question],
-          options: [question.options],
-          typeChoice: this.fb.group({
-            id: [question.typeChoice.id],
-            name: [question.typeChoice.name],
-            description: [question.typeChoice.description]
-          })
-        }));
-      });
-    }
-  }
-
 
   deleteQuestion(question: QuestionItem) {
     if (!this.sectionId) {
@@ -158,7 +130,7 @@ export class EditSectionComponent implements OnInit {
   
 
 
-  save() {
+  updateSection() {
     if (!this.sectionId) {
       alert('No se encontró el ID de la sección');
       return;
@@ -169,11 +141,9 @@ export class EditSectionComponent implements OnInit {
 
     this.http.put(`http://localhost:8000/section/${this.sectionId}/`, payload).subscribe({
       next: () => {
-        // Actualizar el formulario en el servicio
-        this.sectionService.setCurrentSection(payload);
+        alert('Sección actualizada');
       },
       error: (err: any) => {
-        console.error('Error al actualizar:', err);
         alert('Error al actualizar la sección');
       }
     });

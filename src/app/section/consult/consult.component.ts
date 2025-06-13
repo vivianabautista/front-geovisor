@@ -44,6 +44,7 @@ export class ConsultSectionComponent implements OnInit {
 
     // Suscribirse al formulario activo
     this.formService.getCurrentForm().subscribe((form: any) => {
+  
       if (form) {
         this.currentFormId = form.id;
       }
@@ -64,7 +65,7 @@ export class ConsultSectionComponent implements OnInit {
     console.log(item);
   }
 
-  agregar(item: Item) {
+  addSection(item: Item) {
     if (!this.currentFormId) {
       alert('No hay un formulario seleccionado');
       return;
@@ -73,19 +74,7 @@ export class ConsultSectionComponent implements OnInit {
     const url = `http://localhost:8000/form/${this.currentFormId}/section/${item.id}/`;
     this.http.post(url, {}).subscribe({
       next: () => {
-        // Actualizar el formulario en el servicio
-        this.formService.getCurrentForm().subscribe(currentForm => {
-          if (currentForm) {
-            // Obtener el formulario actualizado del backend
-            this.http.get<FormItem>(`http://localhost:8000/form/${this.currentFormId}/`).subscribe(updatedForm => {
-              // Actualizar el formulario en el servicio
-              this.formService.setCurrentForm(updatedForm);
-              // Emitir el evento de actualización
-              this.formService.emitSectionAdded();
-            });
-          }
-        });
-        alert('Sección agregada al formulario');
+        this.formService.emitSectionAdded();
       },
       error: (err: any) => {
         console.error('Error al agregar sección:', err);

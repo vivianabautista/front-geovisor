@@ -21,6 +21,7 @@ export class FormService {
   private sectionAdded = new Subject<void>();
 
   getCurrentForm() {
+    console.log("Formulario observador:",  this.currentForm.getValue());
     return this.currentForm.asObservable();
   }
 
@@ -29,22 +30,19 @@ export class FormService {
   }
 
   emitSectionAdded() {
-    // Actualizar el formulario actual
-    this.getCurrentForm().subscribe(form => {
-      if (form && form.id) {
-        // Obtener el formulario actualizado del backend
-        this.http.get<FormItem>(`http://localhost:8000/form/${form.id}/`).subscribe(updatedForm => {
-          this.setCurrentForm(updatedForm);
-        });
-      }
-    });
+    // Obtener el valor actual del formulario directamente, sin suscribirse
+  const form = this.currentForm.getValue();
+    if (form && form.id) {
+      this.http.get<FormItem>(`http://localhost:8000/form/${form.id}/`).subscribe(updatedForm => {
+        this.setCurrentForm(updatedForm);
+      });
+    }
   }
 
   setCurrentForm(form: FormItem) {
+    console.log("Formulario actualizado:", form);
     this.currentForm.next(form);
   }
 
-  clearCurrentForm() {
-    this.currentForm.next(null);
-  }
+ 
 }

@@ -34,13 +34,10 @@ export class OneComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Asegurarnos de que el estado está inicializado
-    console.log('Estado inicial:', this.appState.getCurrentState());
   }
 
   openCreate(): void {
     // Cambiar al estado de creación
-    console.log('Cambiando a estado CREATE');
     this.appState.setState(AppState.CREATE);
   }
 
@@ -50,7 +47,6 @@ export class OneComponent implements OnInit {
 
   closeCreateForm(): void {
     // Cambiar al estado de consulta
-    console.log('Cambiando a estado CONSULT');
     this.appState.setState(AppState.INITIAL);
   }
 

@@ -25,7 +25,6 @@ export class CreateSectionComponent {
 
   save() {
     const payload = this.form.value;
-    console.log(payload);
     this.http.post('http://localhost:8000/section/', payload).subscribe({
       next: () => {
         alert('Guardado correctamente');

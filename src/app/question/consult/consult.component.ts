@@ -49,16 +49,14 @@ export class ConsultQuestionComponent implements OnInit {
     this.sectionService.addQuestionToSection(this.sectionId, questionId)
       .subscribe({
         next: () => {
-          console.log('Pregunta agregada exitosamente');
         },
         error: (error: any) => {
-          console.error('Error al agregar la pregunta:', error);
+          alert('Error al agregar la pregunta');
         }
       });
 
     // Suscribirse al evento de actualización de sección
     this.sectionService.sectionAdded$.subscribe(() => {
-      console.log('Sección actualizada');
     });
   }
 

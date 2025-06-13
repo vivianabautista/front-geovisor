@@ -24,7 +24,6 @@ export class GenericComponent implements OnInit {
   ngOnInit() {
     // Suscribirse a los cambios de estado
     this.appState.getCurrentState().subscribe(state => {
-      console.log('Estado actual:', state);
       this.showTwoAndThree = 
         state === AppState.CONSULT || 
         state === AppState.EDIT_FORM;

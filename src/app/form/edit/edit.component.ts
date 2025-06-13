@@ -86,7 +86,7 @@ export class EditComponent implements OnInit {
     });
   }
 
-  eliminarSection(section: Section) {
+  deleteSection(section: Section) {
     if (!this.formId) {
       console.error('No se encontró el ID del formulario');
       return;
@@ -95,24 +95,16 @@ export class EditComponent implements OnInit {
     const url = `http://localhost:8000/form/${this.formId}/section/${section.id}/`;
     this.http.delete(url).subscribe({
       next: () => {
-        // Actualizar el formulario localmente
-        const sectionsArray = this.form.get('sections') as FormArray;
-        const index = sectionsArray.controls.findIndex(s => s.get('id')?.value === section.id);
-        if (index !== -1) {
-          sectionsArray.removeAt(index);
-        }
-        
-        // Actualizar el formulario en el servicio
         this.formService.emitSectionAdded();
       },
       error: (err: any) => {
         console.error('Error al eliminar sección:', err);
+        alert('Error al eliminar la sección del formulario');
       }
     });
   }
 
-  editarSection(section: SectionItem) {
-    console.log(section);
+  editSection(section: SectionItem) {
     // Guardar el formulario actual en el servicio
     this.sectionService.setCurrentSection(section);
     this.appState.setState(AppState.EDIT_SECTION);

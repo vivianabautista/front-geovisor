@@ -36,7 +36,6 @@ export class CreateQuestionComponent implements OnInit {
       (types) => {
         if (Array.isArray(types)) {
           this.typeQuestion = types;
-          console.log('Tipos de preguntas:', JSON.stringify(types, null, 2));
           
           // Actualizar valor seleccionado si existe
           const tipoValue = this.form.get('tipo')?.value;
@@ -45,7 +44,6 @@ export class CreateQuestionComponent implements OnInit {
             selectedType && this.form.get('tipo')?.setValue(selectedType.id);
           }
         } else {
-          console.error('Datos no son un array');
           this.typeQuestion = [];
         }
         this.loading = false;
@@ -62,7 +60,6 @@ export class CreateQuestionComponent implements OnInit {
 
     this.questionTypeService.createQuestion(this.form.value).subscribe(
       (response) => {
-        console.log('Pregunta creada:', response);
         this.form.reset();
         this.loadQuestionTypes();
       },
